@@ -1,3 +1,7 @@
 Library
 Logs
 Temp
+.vs
+obj
+*.csproj
+Unity-PBR-Snow.sln
