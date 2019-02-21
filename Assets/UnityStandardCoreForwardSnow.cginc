@@ -17,9 +17,9 @@
     half4 fragAdd (VertexOutputForwardAddSimple i) : SV_Target { return fragForwardAddSimpleInternal(i); }
 #else
     #include "UnityStandardCoreSnow.cginc"
-    VertexOutputForwardBase vertBase (VertexInput v) { return vertForwardBase(v); }
+    VertexOutputForwardBase vertBase_Snow (VertexInput v) { return vertForwardBase_Snow(v); }
     VertexOutputForwardAdd vertAdd (VertexInput v) { return vertForwardAdd(v); }
-    half4 fragBase (VertexOutputForwardBase i) : SV_Target { return fragForwardBaseInternal_Snow(i); }
+    half4 fragBase_Snow (VertexOutputForwardBase i) : SV_Target { return fragForwardBaseInternal_Snow(i); }
     half4 fragAdd (VertexOutputForwardAdd i) : SV_Target { return fragForwardAddInternal(i); }
 #endif
 

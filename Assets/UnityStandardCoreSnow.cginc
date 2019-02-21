@@ -264,8 +264,7 @@ inline FragmentCommonData FragmentSetup (inout float4 i_tex, float3 i_eyeVec, ha
 
 	if(o.normalWorld.y > _SnowThreshold)
 	{
-		o.diffColor += fixed3(1, 1, 1) * _SnowPower;
-		o.alpha = 1;
+		o.diffColor += pow(o.normalWorld.y, _SnowPower) * _SnowColor;
 	}
 
     return o;
@@ -380,7 +379,7 @@ struct VertexOutputForwardBase
     UNITY_VERTEX_OUTPUT_STEREO
 };
 
-VertexOutputForwardBase vertForwardBase (VertexInput v)
+VertexOutputForwardBase vertForwardBase_Snow (VertexInput v)
 {
     UNITY_SETUP_INSTANCE_ID(v);
     VertexOutputForwardBase o;
@@ -403,6 +402,12 @@ VertexOutputForwardBase vertForwardBase (VertexInput v)
     o.tex = TexCoords(v);
     o.eyeVec.xyz = NormalizePerVertexNormal(posWorld.xyz - _WorldSpaceCameraPos);
     float3 normalWorld = UnityObjectToWorldNormal(v.normal);
+    
+    if(normalWorld.y > _SnowThreshold)
+    {
+        o.pos.y -= (normalWorld.y - _SnowThreshold) * _SnowDepth;
+    }
+    
     #ifdef _TANGENT_TO_WORLD
         float4 tangentWorld = float4(UnityObjectToWorldDir(v.tangent.xyz), v.tangent.w);
 

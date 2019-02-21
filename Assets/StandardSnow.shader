@@ -6,6 +6,8 @@ Shader "Standard with Snow"
     {
 		_SnowThreshold("Snow Threshold", Range(0, 1)) = 1
 		_SnowPower("Snow Power", Range(0, 1)) = 1
+        _SnowDepth("Snow Depth", Float) = 1
+        _SnowColor("Snow Color", Color) = (1,1,1,1)
 
         _Color("Color", Color) = (1,1,1,1)
         _MainTex("Albedo", 2D) = "white" {}
@@ -91,8 +93,8 @@ Shader "Standard with Snow"
             // Uncomment the following line to enable dithering LOD crossfade. Note: there are more in the file to uncomment for other passes.
             //#pragma multi_compile _ LOD_FADE_CROSSFADE
 
-            #pragma vertex vertBase
-            #pragma fragment fragBase
+            #pragma vertex vertBase_Snow
+            #pragma fragment fragBase_Snow
 
             #include "UnityStandardCoreForwardSnow.cginc"
 

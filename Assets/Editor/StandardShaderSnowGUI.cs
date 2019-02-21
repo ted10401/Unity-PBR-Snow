@@ -60,6 +60,8 @@ namespace UnityEditor
         MaterialProperty blendMode = null;
         MaterialProperty snowThreshold = null;
         MaterialProperty snowPower = null;
+        MaterialProperty snowDepth = null;
+        MaterialProperty snowColor = null;
         MaterialProperty albedoMap = null;
         MaterialProperty albedoColor = null;
         MaterialProperty alphaCutoff = null;
@@ -96,6 +98,8 @@ namespace UnityEditor
             blendMode = FindProperty("_Mode", props);
             snowThreshold = FindProperty("_SnowThreshold", props);
             snowPower = FindProperty("_SnowPower", props);
+            snowDepth = FindProperty("_SnowDepth", props);
+            snowColor = FindProperty("_SnowColor", props);
             albedoMap = FindProperty("_MainTex", props);
             albedoColor = FindProperty("_Color", props);
             alphaCutoff = FindProperty("_Cutoff", props);
@@ -266,7 +270,9 @@ namespace UnityEditor
         {
             GUILayout.Label("Snow Settings", EditorStyles.boldLabel);
             snowThreshold.floatValue = EditorGUILayout.Slider("Snow Threashold", snowThreshold.floatValue, 0f, 1f);
-            snowPower.floatValue = EditorGUILayout.Slider("Snow Power", snowPower.floatValue, 0f, 1f);
+            snowDepth.floatValue = EditorGUILayout.Slider("Snow Depth", snowDepth.floatValue, 0f, 10f);
+            snowPower.floatValue = EditorGUILayout.Slider("Snow Power", snowPower.floatValue, 0f, 10f);
+            snowColor.colorValue = EditorGUILayout.ColorField("Snow Color", snowColor.colorValue);
         }
 
         void DoNormalArea()
