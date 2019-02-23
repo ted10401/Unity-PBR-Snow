@@ -20,7 +20,6 @@
 
 //---------------------------------------
 half		_SnowThreshold;
-half		_SnowPower;
 half        _SnowDepth;
 half4       _SnowColor;
 

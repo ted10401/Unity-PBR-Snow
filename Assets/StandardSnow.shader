@@ -1,11 +1,10 @@
 // Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "Standard with Snow"
+Shader "Standard Snow"
 {
     Properties
     {
 		_SnowThreshold("Snow Threshold", Range(0, 1)) = 1
-		_SnowPower("Snow Power", Range(0, 1)) = 1
         _SnowDepth("Snow Depth", Float) = 1
         _SnowColor("Snow Color", Color) = (1,1,1,1)
 
@@ -93,8 +92,8 @@ Shader "Standard with Snow"
             // Uncomment the following line to enable dithering LOD crossfade. Note: there are more in the file to uncomment for other passes.
             //#pragma multi_compile _ LOD_FADE_CROSSFADE
 
-            #pragma vertex vertBase_Snow
-            #pragma fragment fragBase_Snow
+            #pragma vertex vertBase
+            #pragma fragment fragBase
 
             #include "UnityStandardCoreForwardSnow.cginc"
 

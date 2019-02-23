@@ -261,11 +261,11 @@ inline FragmentCommonData FragmentSetup (inout float4 i_tex, float3 i_eyeVec, ha
     // NOTE: shader relies on pre-multiply alpha-blend (_SrcBlend = One, _DstBlend = OneMinusSrcAlpha)
 
 	o.diffColor = PreMultiplyAlpha (o.diffColor, alpha, o.oneMinusReflectivity, /*out*/ o.alpha);
-
-	if(o.normalWorld.y > _SnowThreshold)
-	{
-		o.diffColor += pow(o.normalWorld.y, _SnowPower) * _SnowColor;
-	}
+    
+    fixed snowThreshold = dot(o.normalWorld, fixed3(0, 1, 0)) - lerp(1, 0, _SnowThreshold);
+    snowThreshold = saturate(snowThreshold);
+    
+    o.diffColor = lerp(o.diffColor, _SnowColor, snowThreshold);
 
     return o;
 }
@@ -379,7 +379,7 @@ struct VertexOutputForwardBase
     UNITY_VERTEX_OUTPUT_STEREO
 };
 
-VertexOutputForwardBase vertForwardBase_Snow (VertexInput v)
+VertexOutputForwardBase vertForwardBase (VertexInput v)
 {
     UNITY_SETUP_INSTANCE_ID(v);
     VertexOutputForwardBase o;
@@ -403,10 +403,9 @@ VertexOutputForwardBase vertForwardBase_Snow (VertexInput v)
     o.eyeVec.xyz = NormalizePerVertexNormal(posWorld.xyz - _WorldSpaceCameraPos);
     float3 normalWorld = UnityObjectToWorldNormal(v.normal);
     
-    if(normalWorld.y > _SnowThreshold)
-    {
-        o.pos.y -= (normalWorld.y - _SnowThreshold) * _SnowDepth;
-    }
+    fixed snowThreshold = dot(normalWorld, fixed3(0, 1, 0)) - lerp(1, 0, _SnowThreshold);
+    snowThreshold = saturate(snowThreshold);
+    o.pos.y -= lerp(0, _SnowDepth, snowThreshold);
     
     #ifdef _TANGENT_TO_WORLD
         float4 tangentWorld = float4(UnityObjectToWorldDir(v.tangent.xyz), v.tangent.w);
@@ -438,7 +437,7 @@ VertexOutputForwardBase vertForwardBase_Snow (VertexInput v)
     return o;
 }
 
-half4 fragForwardBaseInternal_Snow (VertexOutputForwardBase i)
+half4 fragForwardBaseInternal (VertexOutputForwardBase i)
 {
     UNITY_APPLY_DITHER_CROSSFADE(i.pos.xy);
 
@@ -463,7 +462,7 @@ half4 fragForwardBaseInternal_Snow (VertexOutputForwardBase i)
 
 half4 fragForwardBase (VertexOutputForwardBase i) : SV_Target   // backward compatibility (this used to be the fragment entry function)
 {
-    return fragForwardBaseInternal_Snow(i);
+    return fragForwardBaseInternal(i);
 }
 
 // ------------------------------------------------------------------
