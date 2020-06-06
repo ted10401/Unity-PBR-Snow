@@ -89,7 +89,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SnowDepth: 5
     - _SnowPower: 5
-    - _SnowThreshold: 0
+    - _SnowThreshold: 1
     - _SpecAO: 0
     - _SpecBurn: 0
     - _SpecularHighlights: 1

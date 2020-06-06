@@ -403,9 +403,9 @@ VertexOutputForwardBase vertForwardBase (VertexInput v)
     o.eyeVec.xyz = NormalizePerVertexNormal(posWorld.xyz - _WorldSpaceCameraPos);
     float3 normalWorld = UnityObjectToWorldNormal(v.normal);
     
-    fixed snowThreshold = dot(normalWorld, fixed3(0, 1, 0)) - lerp(1, 0, _SnowThreshold);
+    fixed snowThreshold = dot(normalWorld, fixed3(0, 1, 0)) - lerp(0, 1, _SnowThreshold);
     snowThreshold = saturate(snowThreshold);
-    o.pos.y -= lerp(0, _SnowDepth, snowThreshold);
+    o.pos.y += lerp(0, _SnowDepth, snowThreshold);
     
     #ifdef _TANGENT_TO_WORLD
         float4 tangentWorld = float4(UnityObjectToWorldDir(v.tangent.xyz), v.tangent.w);
